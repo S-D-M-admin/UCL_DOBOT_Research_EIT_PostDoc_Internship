@@ -1,2 +1,2 @@
-# DOBOT Movement Experimentation
+# DOBOT MG400 Movement Experimentation
 
