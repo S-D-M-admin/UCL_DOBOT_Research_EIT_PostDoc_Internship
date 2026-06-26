@@ -521,16 +521,89 @@ class MG400Controller:
         
 
 
+
+ # This code below doesnt work as it treasts dy, dx, dz, and dr as dy movement
+
+ # if __name__ == "__main__":
+     # robot = MG400Controller(ip="192.168.1.6")
+
+     # try:
+         # robot.startup()
+         # robot.go_home_estimate(linear=True)
+         # robot.move_incremental(dx=100, linear=True)
+         # robot.go_home_estimate(linear=True)
+         # robot.move_incremental(dy=100, linear=True)
+         # robot.go_home_estimate(linear=True)
+         # robot.move_incremental(dz=100, linear=True)
+         # robot.go_home_estimate(linear=True)
+         # robot.move_incremental(dr=100, linear=True)
+         # time.sleep(40) 
+     # finally:
+         # robot.disable()
+
+
+
+
+"""
+ # Calibration code: 
 if __name__ == "__main__":
     robot = MG400Controller(ip="192.168.1.6")
 
     try:
         robot.startup()
-        robot.move_incremental(dx=10, dy=50, dz=-10, dr=-10)
-        time.sleep(10) 
+
+        for axis in ["x", "y", "z", "r"]:
+            robot.go_home_estimate(linear=True)
+            time.sleep(3)
+
+            if axis == "x":
+                robot.move_incremental(dx=100, linear=True)
+            elif axis == "y":
+                robot.move_incremental(dy=100, linear=True)
+            elif axis == "z":
+                robot.move_incremental(dz=200, linear=True)
+            elif axis == "r":
+                robot.move_incremental(dr=100, linear=True)
+
+            time.sleep(4)
+
+
     finally:
         robot.disable()
 
+"""
+
+
+
+
+
+# Movement to set position (for the EIT sensor)
+
+if __name__ == "__main__":
+    robot = MG400Controller(ip="192.168.1.6")
+
+    try:
+        robot.startup()
+        robot.move_to(340.0, 0.0, 120.0, 0.0, linear=True)
+        time.sleep(5)
+
+        for axis in ["x", "y", "z", "r"]:
+            
+            if axis == "x":
+                robot.move_incremental(dx=0, linear=True)
+                time.sleep(0)
+            elif axis == "y":
+                robot.move_incremental(dy=0, linear=True)
+                time.sleep(0)
+            elif axis == "z":
+                robot.move_incremental(dz=-60, linear=True)
+                time.sleep(2)
+            elif axis == "r":
+                robot.move_incremental(dr=0, linear=True) 
+                time.sleep(0)
+
+    finally:
+        robot.disable()
 
 
  # note
